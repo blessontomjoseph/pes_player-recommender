@@ -3,7 +3,7 @@
 ## What's the data? 
 1. This is efootball pro evolusion soccer data,its got all the players across the world playing in different leagues and the entire performance measurees and individual special abilities like skill and rating in different position and finallly the overall rating.
 
-## The philosophy is simple
+## The philosophy is..
 1. Problem was how can i use this data in a way thats beneficial for a team thats facing some sort of challenge
 1. This data does't contain any match statistics so i cannot use this to predict win probabilities or player selection for next match etc.
 1. But another challenge often seen is to get players for low cost as a replacement for a player currently playing(often players playing in mediocre leagues or young players) but possessing a good talent and can fill the position of a player in the team

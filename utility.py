@@ -32,3 +32,9 @@ def similar_players(player_name,data):
     out['p2p_dist']=distance
     players=out.sort_values('p2p_dist',ascending=True)
     return players.select_dtypes('object').iloc[1:]
+
+def filter_results(data,**kwargs):
+    for key,value in kwargs.items():
+        data=data.loc[data[key].str.contains(value)]
+        return data
+    
