@@ -1,3 +1,8 @@
+
+from sklearn.impute import SimpleImputer
+
+
+
 def team_val(team_data):
     """finds the vector representing a team
 
@@ -77,4 +82,10 @@ def feature_eng(data,new_data):
     
     return new_data
 
-data_eng = feature_eng(regular,new_data)
+
+def new_features(data,new_data):
+    new_data=feature_eng(data,new_data)
+    im=SimpleImputer(missing_values=0,strategy='mean')
+    num=new_data.select_dtypes('number').columns
+    new_data[num]=im.fit_transform(new_data[num])
+    return new_data
