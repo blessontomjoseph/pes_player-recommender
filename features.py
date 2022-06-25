@@ -1,5 +1,7 @@
 
 from sklearn.impute import SimpleImputer
+import numpy as np
+import pandas as pd
 
 
 
@@ -13,7 +15,7 @@ def team_val(team_data):
         vector : team vector
     """
     weight=team_data.weight_val
-    ini_features = team_data.drop('weight_val').select_dtypes('number')
+    ini_features = team_data.drop('weight_val',axis=1).select_dtypes('number')
     weighted_matrix = ini_features.apply(lambda x:x*weight)
     vector = weighted_matrix.sum(axis=0)
     normalized_vector = vector/(np.linalg.norm(vector))
@@ -31,7 +33,7 @@ def pos_val(team_data,unique_position):
     """
     pos_data=team_data.loc[team_data['registered_position']==unique_position]
     weight=pos_data.weight_val
-    ini_feat=pos_data.drop('weight_val').select_dtypes('number')
+    ini_feat=pos_data.drop('weight_val',axis=1).select_dtypes('number')
     weighted_matrix= ini_feat.apply(lambda x:x*weight)
     vector=weighted_matrix.sum(axis=0)
     normalized_vector=vector/np.linalg.norm(vector)
@@ -47,8 +49,8 @@ def player_val(team_data,player):
     Returns:
         vctor: player vector
     """
-    player_data=team_data.iloc[player]
-    vec=player_data.drop('weight_vals').select_dtypes('number')
+    player_data=team_data.loc[team_data.name==player]
+    vec=player_data.drop('weight_val',axis=1).select_dtypes('number')
     n_vec=vec/np.linalg.norm(vec)
     return n_vec.values
 
@@ -57,7 +59,7 @@ def player_val(team_data,player):
 
 def feature_eng(data,new_data):
     """fills up the ralatonal values between a player and all the positions"""
-
+    teams=data.team_name.unique()
     for team in teams:
         team_dict={}
         positional_dict={}
@@ -70,9 +72,9 @@ def feature_eng(data,new_data):
         for position in unique_positions:
             positional_dict[position]=pos_val(team_data,position)
         
-        for player in range(team_data.shape[0]):
-            name=team_data['name'].iloc[player]
-            player_dict[name]=player_val(team_data,player)
+        for ind in range(len(team_data)):
+            name=team_data['name'].iloc[ind]
+            player_dict[name]=player_val(team_data,name)
             
         for player in player_dict:
             new_data['Team'][new_data['name']==player] = np.linalg.norm(team_dict.get(team)-player_dict.get(player))
