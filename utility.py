@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
+import numpy as np
 
-    
+
 def similar_players(player_name,data):
     """gets similar players
 
