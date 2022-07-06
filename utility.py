@@ -28,3 +28,22 @@ def filter_results(data,**kwargs):
         data=data.loc[data[key].str.contains(value)]
         return data
     
+class filter:
+    def __init__(self,result):
+        self.result=result
+    def f_age_above(self,age):
+        return self.result[self.result['age']>age] 
+    def f_age_below(self):
+        return self.result[self.result['age']<age]
+    def f_league(self):
+        pass
+    def f_position(self):
+        pass
+    def
+    
+    
+def spreadlit(result):
+    import streamlit as st
+    st.title('player recommendation')
+    st.``
+    
