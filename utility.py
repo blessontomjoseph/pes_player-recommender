@@ -53,23 +53,24 @@ def position (position,similar):
     similar=similar.loc[similar.position==position]
     return similar
 
-def ex(self,filters):
-    import utility
-    our_player=self.result.loc[self.result.name.str.contains(filters['player_name'].upper())]
-    similar_players=utility.similar_players(our_player,self.result)
+def ex(filters,data):
+    our_player=data.loc[data.name.str.contains(filters['player_name'].upper())]
+    similar_players=similar_players(our_player,result)
 
     if filters['age']!='no filter':
-        self.result=self.age_below(filters['age'],similar_players)
+        result=age_below(filters['age'],similar_players)
     if filters['league']!='no filter':
-        self.result=self.league(filters['league'],similar_players)
+        result=league(filters['league'],similar_players)
     if filters['nationality']!='no filter':   
-        self.result=self.nationality(filters['nationality'],similar_players)
+        result=nationality(filters['nationality'],similar_players)
     if filters['foot']!='no filter':
-        self.result=self.foot(filters['foot'],similar_players)
+        result=foot(filters['foot'],similar_players)
     if filters['ball_color']!='no filter':
-        self.result=self.ball_color(filters['ball_color'],similar_players)
+        result=ball_color(filters['ball_color'],similar_players)
     if filters['position']!='no filter':
-        self.result=self.position(filters['position'],similar_players)
+        result=position(filters['position'],similar_players)
+    st.write(result)
+
     
 
 def streamlit(new_data):    
