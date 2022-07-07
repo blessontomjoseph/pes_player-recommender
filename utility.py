@@ -27,45 +27,42 @@ def similar_players(player_name,data):
 class filter:
     def __init__(self,result):
         self.result=result
-    def age_above(self,age):
-        return self.result=self.result[self.result['age']>age] 
-    
+        
     def age_below(self,age):
-        self.rusult=self.result[self.result['age']<age]
-        self.result
+        self.result=self.result[self.result['player_age']<age] 
+        return self.result
         
     def league(self,league):
         self.result=self.result.loc[self.result.league==league]
         return self.result
     
-    def current_team(self):
-        self.result=self.result.loc[]
-        pass
-    def nationality(self):
-        pass
-    def foot(self):
+    def current_team(self,team):
+        self.result=self.result.loc[self.result.team_name==team]
+        return self.result
+    
+    def nationality(self,nationality):
+        self.result=self.result.loc[self.result.nationality==nationality]
+        return self.result
+    
+    def foot(self,foot):
         pass
     def ball_color(self):
         pass
     def position (self):
         pass
-    
-    
-def nofilter(data):
-    return data
 
-def team_of_league(league,data):
-        return data.loc[data.league==league]['team'].unique()
-
-def streamlit():
+def streamlit(new_data):    
     st.title('Player Recommendation')
-    selected = st.text_input("",key='search')
+    player_name = st.text_input("",key='search')
     button_clicked = st.button("ok")
     st.sidebar.title('Filter Items')
-    age_below=st.sidebar.slider('Age Below',15,50)
-    league=st.sidebar.selectbox('League',[])
-    current_team=st.sidebar.selectbox('Team',list()) # a filter of a league
-    nationality=st.sidebar.selectbox('Nationality',list()) #if result=empyu make apro result
-    foot=st.sidebar.selectbox('foot',['Left','Right'])
-    ball_color=st.sidebar.selectbox('Ball Color',['Black','Gold','Silver','Bronze','White'])
-    position=st.sidebar.selectbox('Position',list])
+    
+    age=st.sidebar.slider('Age Below',15,50)
+    league=st.sidebar.selectbox('League',['no filter']+list(new_data.league.unique())) # a filter of a league
+    nationality=st.sidebar.selectbox('Nationality',['no filter']+list(new_data.nationality.unique())) #if result=empyu make apro result
+    foot=st.sidebar.selectbox('foot',['no filter','Left','Right'])
+    ball_color=st.sidebar.selectbox('Ball Color',['no filter']+list(new_data.ball_color.unique()))
+    position=st.sidebar.selectbox('Position',['no filter']+list(new_data.registered_position.unique()))
+    fils=['player_name','age','league','nationality','foot','ball_color','position']
+    vals=[player_name,age,league,nationality,foot,ball_color,position]
+    return {fils[i]:vals[i] for i in range(len(fils)) if vals[i]!='no filter'}

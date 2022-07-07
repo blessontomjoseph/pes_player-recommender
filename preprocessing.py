@@ -45,6 +45,7 @@ def pre(data_path):
 
 
   numerical=regular.select_dtypes('number').columns
+  regular['player_age']=regular['age']
   sc=StandardScaler()
   regular[numerical]=sc.fit_transform(regular[numerical])
 
