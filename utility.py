@@ -24,34 +24,57 @@ def similar_players(player_name,data):
     return players.select_dtypes('object').iloc[1:]
 
     
-class filter:
-    def __init__(self,result):
-        self.result=result
-        
-    def age_below(self,age):
-        self.result=self.result[self.result['player_age']<age] 
-        return self.result
-        
-    def league(self,league):
-        self.result=self.result.loc[self.result.league==league]
-        return self.result
+
+def age_below(age,similar):
+    similar=similar[similar['player_age']<age] 
+    return similar
     
-    def current_team(self,team):
-        self.result=self.result.loc[self.result.team_name==team]
-        return self.result
+def league(league,similar):
+    similar=similar.loc[similar.league==league]
+    return similar
+
+# def current_team(self,team):
+#     self.result=self.result.loc[self.result.team_name==team]
+#     return self.result
+
+def nationality(nationality,similar):
+    similar=similar.loc[similar.nationality==nationality]
+    return similar
+
+def foot(foot,similar):
+    similar=similar.loc[similar.foot==foot]
+    return similar
     
-    def nationality(self,nationality):
-        self.result=self.result.loc[self.result.nationality==nationality]
-        return self.result
+def ball_color(ball_color,similar):
+    similar=similar.loc[similar.ball_color==ball_color]
+    return similar
+
+def position (position,similar):
+    similar=similar.loc[similar.position==position]
+    return similar
+
+def ex(self,filters):
+    import utility
+    our_player=self.result.loc[self.result.name.str.contains(filters['player_name'].upper())]
+    similar_players=utility.similar_players(our_player,self.result)
+
+    if filters['age']!='no filter':
+        self.result=self.age_below(filters['age'],similar_players)
+    if filters['league']!='no filter':
+        self.result=self.league(filters['league'],similar_players)
+    if filters['nationality']!='no filter':   
+        self.result=self.nationality(filters['nationality'],similar_players)
+    if filters['foot']!='no filter':
+        self.result=self.foot(filters['foot'],similar_players)
+    if filters['ball_color']!='no filter':
+        self.result=self.ball_color(filters['ball_color'],similar_players)
+    if filters['position']!='no filter':
+        self.result=self.position(filters['position'],similar_players)
     
-    def foot(self,foot):
-        pass
-    def ball_color(self):
-        pass
-    def position (self):
-        pass
 
 def streamlit(new_data):    
+    "take the result out as new_data"
+    
     st.title('Player Recommendation')
     player_name = st.text_input("",key='search')
     button_clicked = st.button("ok")
@@ -65,4 +88,5 @@ def streamlit(new_data):
     position=st.sidebar.selectbox('Position',['no filter']+list(new_data.registered_position.unique()))
     fils=['player_name','age','league','nationality','foot','ball_color','position']
     vals=[player_name,age,league,nationality,foot,ball_color,position]
-    return {fils[i]:vals[i] for i in range(len(fils)) if vals[i]!='no filter'}
+    filter_pairs={fils[i]:vals[i] for i in range(len(fils)) if vals[i]!='no filter'}
+    return filter_pairs
