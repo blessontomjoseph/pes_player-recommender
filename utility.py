@@ -13,7 +13,7 @@ def similar_players(player_name,data):
         df: similar players with relevant details
     """
 
-    our_player=data.loc[data['name'].str.contains(player_name.upper())]
+    our_player=data.loc[data['name']==player_name]
     our_player=our_player.select_dtypes('number')
     other_players= data.select_dtypes('number')
     distance= our_player - other_players
@@ -28,14 +28,17 @@ def similar_players(player_name,data):
 def streamlit(new_data):    
     "take the result out as new_data"
     
-    st.title('player recommendation')
-    player_name = st.sidebar.text_input("",key='search')
-    button_clicked = st.sidebar.button("ok")
+    st.title('Find Similar Players')
+    st.write('Results')
+    st.sidebar.title('Find Players Like..')
+    # player_name = st.sidebar.text_input("",key='search')
+    # button_clicked = st.sidebar.button("ok")
+    player_name=st.sidebar.selectbox('Player',['Player Name']+sorted(list(new_data.name)))
     st.sidebar.title('Filter Items')
     # age=st.sidebar.slider('Age Below',15,50)
     league=st.sidebar.selectbox('League',['no filter']+list(new_data.league.unique())) # a filter of a league
     nationality=st.sidebar.selectbox('Nationality',['no filter']+list(new_data.nationality.unique())) #if result=empyu make apro result
-    foot=st.sidebar.selectbox('foot',['no filter','Left foot','Right foot'])
+    foot=st.sidebar.selectbox('Foot',['no filter','Left foot','Right foot'])
     ball_color=st.sidebar.selectbox('Ball Color',['no filter']+list(new_data.ball_color.unique()))
     position=st.sidebar.selectbox('Position',['no filter']+list(new_data.registered_position.unique()))
     fils=['player_name','league','nationality','foot','ball_color','position']
