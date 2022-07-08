@@ -28,9 +28,9 @@ def similar_players(player_name,data):
 def streamlit(new_data):    
     "take the result out as new_data"
     
-    st.title('knn objects in f- space')
+    st.title('player recommendation')
     player_name = st.sidebar.text_input("",key='search')
-    # button_clicked = st.button("ok")
+    button_clicked = st.sidebar.button("ok")
     st.sidebar.title('Filter Items')
     # age=st.sidebar.slider('Age Below',15,50)
     league=st.sidebar.selectbox('League',['no filter']+list(new_data.league.unique())) # a filter of a league
@@ -68,5 +68,6 @@ def ex(filters,new_data):
         similar=similar.loc[similar.registered_position==filters['position']]
         
     similar.reset_index(drop=True,inplace=True)
-    return similar
+    if st.sidebar.button('apply'):
+        st.write(similar)
 
