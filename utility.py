@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
-
-def similar_players(player_name,data):
+    
+def similar_player(player_name,data):
     """gets similar players
 
     Args:
@@ -12,17 +12,15 @@ def similar_players(player_name,data):
     Returns:
         df: similar players with relevant details
     """
-
-    our_player=data.loc[data['name']==player_name]
-    our_player=our_player.select_dtypes('number')
-    other_players= data.select_dtypes('number')
-    distance= our_player - other_players
-    distance=np.linalg.norm(distance,axis=1)
+    our_player=data.loc[data['name'].str.contains(player_name)]
+    our_player=our_player.select_dtypes('number').to_numpy()    
+    other_players= data.select_dtypes('number').to_numpy()
+    diss=np.linalg.norm((our_player - other_players),axis=1)
     out=data.copy()
-    out['p2p_dist']=distance
-    players=out.sort_values('p2p_dist',ascending=True)
+    out['p2p_dist']=diss
+    players=out.sort_values('p2p_dist')
     return players[['name', 'shirt_number', 'team_name', 'league', 'nationality', 'region','foot', 'registered_position', 'ball_color']].iloc[1:]
-
+    
     
 
 def streamlit(new_data):    

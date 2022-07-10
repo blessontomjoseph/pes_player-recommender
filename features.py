@@ -15,7 +15,8 @@ def team_val(team_data):
         vector : team vector
     """
     weight=team_data.weight_val
-    ini_features = team_data.drop('weight_val',axis=1).select_dtypes('number')
+#     ini_features = team_data.drop('weight_val',axis=1).select_dtypes('number')
+    ini_features = team_data.select_dtypes('number')
     weighted_matrix = ini_features.apply(lambda x:x*weight)
     vector = weighted_matrix.sum(axis=0)
     normalized_vector = vector/(np.linalg.norm(vector))
@@ -33,7 +34,8 @@ def pos_val(team_data,unique_position):
     """
     pos_data=team_data.loc[team_data['registered_position']==unique_position]
     weight=pos_data.weight_val
-    ini_feat=pos_data.drop('weight_val',axis=1).select_dtypes('number')
+#     ini_feat=pos_data.drop('weight_val',axis=1).select_dtypes('number')
+    ini_feat=pos_data.select_dtypes('number')
     weighted_matrix= ini_feat.apply(lambda x:x*weight)
     vector=weighted_matrix.sum(axis=0)
     normalized_vector=vector/np.linalg.norm(vector)
@@ -50,7 +52,8 @@ def player_val(team_data,player):
         vctor: player vector
     """
     player_data=team_data.loc[team_data.name==player]
-    vec=player_data.drop('weight_val',axis=1).select_dtypes('number')
+#     vec=player_data.drop('weight_val',axis=1).select_dtypes('number')
+    vec=player_data.select_dtypes('number')
     n_vec=vec/np.linalg.norm(vec)
     return n_vec.values
 
