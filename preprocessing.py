@@ -8,28 +8,31 @@ warnings.simplefilter('ignore')
 
 
 def pre(data_path):
+    """data preprocessing
+
+    Args:
+        data_path (string)): path-unprocessed data
+    """
     
     df= pd.read_csv(data_path)
-    regular=df.copy()
+    data=df.copy()
 
-    regular.drop('rating_stars',1,inplace=True)
+    data.drop('rating_stars',1,inplace=True)
     dic={'---':0}
-    regular['playing_style'].replace(dic,inplace=True)
+    data['playing_style'].replace(dic,inplace=True)
 
-    na=regular.isna().sum()
+    na=data.isna().sum()
     nan_cols=na[na>0].index
     # these rows has nan values
+    
     im=SimpleImputer(strategy='median')
-    regular[nan_cols] =im.fit_transform(regular[nan_cols])
+    data[nan_cols] =im.fit_transform(data[nan_cols])
 
     #foot
     foot_dict={'Left foot':0,'Right foot':1}
-    regular.foot_val=regular.foot
-    regular.foot_val=regular.foot.map(foot_dict)
-    regular['reg_pos_num'] = regular.registered_position
-
-    # condition ='sort of current status'
-    #reg pos num the number curresponding to reistered position though the original coulumn needed as is.
+    data.foot_val=data.foot
+    data.foot_val=data.foot.map(foot_dict)
+    data['reg_pos_num'] = data.registered_position
 
     oe=OrdinalEncoder(categories=[['E','D','C','B','A'],
                                 ['CF','RWF', 'LWF', 'SS','AMF', 'RMF', 'LMF','CMF','DMF','RB', 'LB', 'CB','GK'],
@@ -41,26 +44,23 @@ def pre(data_path):
                               'Classic No. 10', 'Target Man', 'Full-back Finisher',
                               'Defensive Full-back', 'Cross Specialist', 0]])
 
-    regular[['condition','reg_pos_num','playing_style']]=oe.fit_transform(regular[['condition','reg_pos_num','playing_style']])
+    data[['condition','reg_pos_num','playing_style']]=oe.fit_transform(data[['condition','reg_pos_num','playing_style']])
 
-
-    numerical=regular.select_dtypes('number').columns
+    numerical=data.select_dtypes('number').columns
     sc=StandardScaler()
-    regular[numerical]=sc.fit_transform(regular[numerical])
+    data[numerical]=sc.fit_transform(data[numerical])
 
-
-    color=regular.ball_color.unique()
+    color=data.ball_color.unique()
     a=[i for i in range(5,0,-1)]
     mapper={color[i]:a[i] for i in range(5)}
 
+    data['weight_val']=data['ball_color']
+    data['weight_val']=data['ball_color'].map(mapper)
+    categorical= data.select_dtypes('object').columns
+    new_features=data[categorical]
+#     data[['age']]
+    extra=pd.DataFrame(np.zeros([new_features.shape[0],new_features.registered_position.unique().shape[0]+1]),columns=['RWF', 'LWF', 'CF', 'AMF', 'GK', 'CB', 'DMF', 'CMF', 'SS', 'LMF','RB', 'LB', 'RMF','Team'])
+    new_features=pd.concat([new_features,extra],axis=1)  
+    return data,new_features
 
-    regular['weight_val']=regular['ball_color']
-    regular['weight_val']=regular['ball_color'].map(mapper)
-    categorical= regular.select_dtypes('object').columns
-    new_data=regular[categorical]
-#     regular[['age']]
-
-    extra=pd.DataFrame(np.zeros([new_data.shape[0],new_data.registered_position.unique().shape[0]+1]),columns=['RWF', 'LWF', 'CF', 'AMF', 'GK', 'CB', 'DMF', 'CMF', 'SS', 'LMF','RB', 'LB', 'RMF','Team'])
-    new_data=pd.concat([new_data,extra],axis=1)  
-    return regular,new_data
 

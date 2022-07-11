@@ -1,7 +1,6 @@
 import preprocessing
 import features
 import utility
-import streamlit as st
 
 
 data_path = 'pes2021-all-players.csv'

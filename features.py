@@ -1,9 +1,5 @@
-
 from sklearn.impute import SimpleImputer
 import numpy as np
-import pandas as pd
-
-
 
 def team_val(team_data):
     """finds the vector representing a team
@@ -21,6 +17,7 @@ def team_val(team_data):
     vector = weighted_matrix.sum(axis=0)
     normalized_vector = vector/(np.linalg.norm(vector))
     return normalized_vector.values
+
 
 def pos_val(team_data,unique_position):
     """vector reprsenting  a position in a team
@@ -41,6 +38,7 @@ def pos_val(team_data,unique_position):
     normalized_vector=vector/np.linalg.norm(vector)
     return normalized_vector.values
 
+
 def player_val(team_data,player):
     """player vector
 
@@ -60,8 +58,9 @@ def player_val(team_data,player):
 
 
 
-def feature_eng(data,new_data):
+def feature_eng(data,new_features):
     """fills up the ralatonal values between a player and all the positions"""
+    
     teams=data.team_name.unique()
     for team in teams:
         team_dict={}
@@ -80,17 +79,26 @@ def feature_eng(data,new_data):
             player_dict[name]=player_val(team_data,name)
             
         for player in player_dict:
-            new_data['Team'][new_data['name']==player] = np.linalg.norm(team_dict.get(team)-player_dict.get(player))
+            new_features['Team'][new_features['name']==player] = np.linalg.norm(team_dict.get(team)-player_dict.get(player))
 
             for position in positional_dict:
-                new_data[position][new_data['name']==player] = np.linalg.norm(positional_dict.get(position)-player_dict.get(player))
+                new_features[position][new_features['name']==player] = np.linalg.norm(positional_dict.get(position)-player_dict.get(player))
     
-    return new_data
+    return new_features
 
 
-def new_features(data,new_data):
-    new_data=feature_eng(data,new_data)
+def fill_new_features(data,new_features):
+    """fills the new_feature values
+
+    Args:
+        data (dataframe): preprocessed data
+        new_features (dataframe): new_feature values to be filled
+
+    Returns:
+        dataframe: filled new_Features
+    """
+    new_features=feature_eng(data,new_features)
     im=SimpleImputer(missing_values=0,strategy='mean')
-    num=new_data.select_dtypes('number').columns
-    new_data[num]=im.fit_transform(new_data[num])
-    return new_data
+    num=new_features.select_dtypes('number').columns
+    new_features[num]=im.fit_transform(new_features[num])
+    return new_features
