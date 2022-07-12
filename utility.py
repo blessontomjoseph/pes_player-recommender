@@ -29,8 +29,8 @@ def similar_players(player_name,new_features):
 def streamlit(new_features):    
     "outputs filter options"
     
-    st.title('Find Similar Players')
-    st.write('Results')
+    st.title('Player Suggestions')
+    # st.write('Results')
     st.sidebar.title('Find Players Like..')
     # player_name = st.sidebar.text_input("",key='search')
     # button_clicked = st.sidebar.button("ok")
