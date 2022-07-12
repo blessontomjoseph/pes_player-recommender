@@ -1,4 +1,4 @@
-# pes_player-recommender
+# PES Player Recommender
 
 read about the project:https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
 
