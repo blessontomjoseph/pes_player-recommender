@@ -2,9 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import  OrdinalEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
-import warnings
-warnings.simplefilter('ignore')
-
 
 
 def pre(data_path):

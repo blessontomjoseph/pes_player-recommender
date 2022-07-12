@@ -3,7 +3,7 @@ import features
 import utility
 
 
-data_path = 'pes2021-all-players.csv'
+data_path = r"data\pes2021-all-players.csv"
 regular, new_data = preprocessing.pre(data_path) 
 data_eng = features.new_features(regular, new_data)
 player_name = input('player_name?')
