@@ -10,11 +10,11 @@ Often at the end of the season, some players leave, leaving managers in a positi
 The philosophy is to find the perfect replacement to fill the duties of a player, not a similar player. players who have been a part of a similar system are more likely to fill the part than finding the nearest neighbor using the original hundreds of features. This also decreases the computational expenses a lot. we could find a player based on similarity of the original features but they could have been a part of a different system that affects the adaptability of the player. So, we essentially are selecting players on basis of familiarity with the system. Hence adaptability.
 
 ## New Features
-### Team value: 
+#### Team value: 
 This feature uniquely identifies a single team. A team is a perfect balance of many features in many different ratios accessed through players. I made a normalized weighted sum of all the attributes to get this vector representing a team. with the weights being a feature called ‘ball color’ which represents how good a player is and it goes from 5–1 eg: Messi is a 5-tier player. more like a team’s-best representative are the best players
-### Positional Value:
+#### Positional Value:
 A positional value has its value inside a team, nothing but the same normalizer weighted sum of all the players playing in a unique position in a team. now that’s a vector representing a unique position of a team
-### Player Value:
+#### Player Value:
 Player value is just the normalized vector of all the attributes of an individual player.
 
 ## Web app -filters
