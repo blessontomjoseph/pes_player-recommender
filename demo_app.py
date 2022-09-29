@@ -1,9 +1,32 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
+from sklearn.preprocessing import MinMaxScaler
 
 path= r"result/result.csv"
 new_features = pd.read_csv(path)
+
+
+def similar_players(player_name,new_features):
+    """gets similar players
+    Args:
+        player_name (str): players similar to
+        new_features (df): new_features with all similarity features
+        numerical_cols (): _description_
+    Returns:
+        df: similar players with relevant details
+    """
+    mm=MinMaxScaler(feature_range=(0,1))
+    our_player=new_features.loc[new_features['name']==player_name]
+    our_player=our_player.select_dtypes('number').to_numpy()
+    other_players= new_features.select_dtypes('number').to_numpy()
+    diss=np.linalg.norm((our_player - other_players),axis=1)
+    out=new_features.copy()
+    out['similarity']=diss #similarity=p2p_dist
+    out['similarity']=1-mm.fit_transform(out['similarity'].to_numpy().reshape(-1,1)) 
+    players=out.sort_values('similarity',ascending=False)
+    return players[['similarity','name', 'shirt_number', 'team_name', 'league', 'nationality', 'region','foot', 'registered_position', 'ball_color']].iloc[1:]
+    
 
 def streamlit(new_features):    
     "outputs filter options"
