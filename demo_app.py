@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 
-path= r"result\result.csv"
+path= r"result/result.csv"
 new_features = pd.read_csv(path)
 
 def streamlit(new_features):    
