@@ -24,9 +24,4 @@ Player value is just the normalized vector of all the attributes of an individua
 3. Access the web app here 👉: https://blessontomjoseph-pes-player-recommender-demo-app-htr28c.streamlitapp.com/
 
 
-
-## Reproduce Results:
-1. Download the package and run demo.py for streamlit demo
-2. or run result.py to reproduce the results
-
 read more on the project: https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
