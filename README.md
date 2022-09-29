@@ -1,4 +1,4 @@
-# Football Player Recommendation - From PES Data
+# Football Player Recommendation - From PES Data⚽️
 
 ![poster](images/1_sPWX48ryH5zaaf6YjiMSLw.jpeg)
 
@@ -17,10 +17,17 @@ A positional value has its value inside a team, nothing but the same normalizer 
 ### Player Value:
 Player value is just the normalized vector of all the attributes of an individual player.
 
+## Web app -filters
+![poster](images/1_vpT1QNOvUjQPb52BJF0ELw.png)
+1. Get similar players choosing a  reference from "player" search field
+2. filter similar with league nationality,foot,ball colour, or position 
+3. access the web app here 👉:
 
 
 
-read about the project:https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
 
+## Reproduce Results:
 1. download the package and run demo.py for streamlit demo
 2. or run result.py to reproduce the results
+
+read more about the project: https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
