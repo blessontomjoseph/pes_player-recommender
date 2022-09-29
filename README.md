@@ -20,14 +20,14 @@ Player value is just the normalized vector of all the attributes of an individua
 ## Web app -filters
 ![poster](images/1_vpT1QNOvUjQPb52BJF0ELw.png)
 1. Get similar players choosing a  reference from "player" search field
-2. filter similar with league nationality,foot,ball colour, or position 
-3. access the web app here 👉:
+2. Filter similar with league nationality,foot,ball colour, or position 
+3. Access the web app here 👉:
 
 
 
 
 ## Reproduce Results:
-1. download the package and run demo.py for streamlit demo
+1. Download the package and run demo.py for streamlit demo
 2. or run result.py to reproduce the results
 
-read more about the project: https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
+read more on the project: https://medium.com/@blessontomjoseph/football-player-recommendation-team-specific-95c4515598ee
