@@ -20,8 +20,8 @@ Player value is just the normalized vector of all the attributes of an individua
 ## Web app -filters
 ![poster](images/1_vpT1QNOvUjQPb52BJF0ELw.png)
 1. Get similar players choosing a  reference from "player" search field
-2. Filter similar with league nationality,foot,ball colour, or position 
-3. Access the web app here 👉:
+2. filter similar with league nationality,foot,ball colour, or position 
+3. access the web app here 👉: https://blessontomjoseph-pes-player-recommender-demo-app-create-4sby91.streamlitapp.com/
 
 
 
